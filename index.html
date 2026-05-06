@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Email Rewriter</title>
+</head>
+<body>
+  <h2>Email Rewriter ✉️</h2>
+
+  <textarea id="email" rows="10" cols="50" placeholder="Paste your email here..."></textarea>
+  <br><br>
+
+  <select id="tone">
+    <option value="professional">Professional</option>
+    <option value="friendly">Friendly</option>
+    <option value="direct">Direct</option>
+    <option value="polite">Polite</option>
+    <option value="passive-aggressive">Passive Aggressive (fun)</option>
+  </select>
+
+  <br><br>
+  <button onclick="rewrite()">Rewrite</button>
+
+  <h3>Result:</h3>
+  <pre id="result"></pre>
+
+  <script>
+    async function rewrite() {
+      const email = document.getElementById("email").value;
+      const tone = document.getElementById("tone").value;
+
+      const res = await fetch("http://localhost:3000/rewrite", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, tone })
+      });
+
+      const data = await res.json();
+      document.getElementById("result").innerText = data.output;
+    }
+  </script>
+</body>
+</html>
