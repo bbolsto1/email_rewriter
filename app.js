@@ -1,36 +1,29 @@
-import express from "express";
-import fetch from "node-fetch";
-import cors from "cors";
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-const API_KEY = "YOUR_API_KEY_HERE";
-
-app.post("/rewrite", async (req, res) => {
-  const { email, tone } = req.body;
-
-  const prompt = `Rewrite the following email in a ${tone} tone:\n\n${email}`;
-
-  try {
-    const response = await fetch("https://api.openai.com/v1/responses", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "gpt-4.1-mini",
-        input: prompt
-      })
-    });
-
-    const data = await response.json();
-    res.json({ output: data.output[0].content[0].text });
-  } catch (err) {
-    res.status(500).send("Error");
+function rewriteEmail(email, tone) {
+  if (tone === "professional") {
+    return "Dear Team,\n\n" +
+      email.charAt(0).toUpperCase() + email.slice(1) +
+      "\n\nBest regards,\n[Your Name]";
   }
-});
 
-app.listen(3000, () => console.log("Running on http://localhost:3000"));
+  if (tone === "friendly") {
+    return "Hey there!\n\n" + email + "\n\nThanks! 😊";
+  }
+
+  if (tone === "direct") {
+    return email.replace(/hey|just|checking/gi, "").trim() + ".";
+  }
+
+  if (tone === "polite") {
+    return "Hi,\n\nWould you mind taking a look at this?\n\n" +
+      email +
+      "\n\nThank you very much.";
+  }
+
+  if (tone === "passive-aggressive") {
+    return "Hi,\n\nJust following up again since I haven't heard back.\n\n" +
+      email +
+      "\n\nThanks.";
+  }
+
+  return email;
+}
