@@ -9,26 +9,32 @@
 </head>
 
 <body>
-<h2>Email Rewriter ✉️</h2>
 
-<textarea id="email" rows="10" placeholder="Paste your email here..."></textarea>
+  <div class="container">
 
-<br><br>
+    <h2>Email Rewriter ✉️</h2>
 
-<select id="tone">
-  <option value="professional">Professional</option>
-  <option value="friendly">Friendly</option>
-  <option value="direct">Direct</option>
-  <option value="polite">Polite</option>
-  <option value="passive-aggressive">Passive Aggressive</option>
-</select>
+    <div class="input-section">
+      <textarea id="email" rows="10" placeholder="Paste your email here..."></textarea>
 
-<br><br>
+      <select id="tone">
+        <option value="professional">Professional</option>
+        <option value="friendly">Friendly</option>
+        <option value="direct">Direct</option>
+        <option value="polite">Polite</option>
+        <option value="passive-aggressive">Passive Aggressive</option>
+      </select>
 
-<button onclick="rewrite()">Rewrite</button>
+      <button onclick="rewrite()">Rewrite</button>
+    </div>
 
-<h3>Result:</h3>
-<pre id="result"></pre>
-<script src="./app.js"></script>
+    <div class="output-section">
+      <h3>Result:</h3>
+      <pre id="result"></pre>
+    </div>
+
+  </div>
+
+  <script src="./app.js"></script>
 </body>
 </html>
