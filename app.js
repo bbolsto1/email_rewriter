@@ -1,3 +1,11 @@
+import express from "express";
+import cors from "cors";
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// 👇 Add this function ABOVE the route
 function rewriteEmail(email, tone) {
   if (tone === "professional") {
     return "Dear Team,\n\n" +
@@ -27,3 +35,12 @@ function rewriteEmail(email, tone) {
 
   return email;
 }
+
+// 👇 THIS is the rewrite route
+app.post("/rewrite", (req, res) => {
+  const { email, tone } = req.body;
+  const output = rewriteEmail(email, tone);
+  res.json({ output });
+});
+
+app.listen(3000, () => console.log("Running on http://localhost:3000"));
